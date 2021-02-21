@@ -27,6 +27,7 @@ namespace TestTask.ImageCache.API
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.UseHttp();
             services.ConfigureSwagger();
             services.UseCors(APICors);

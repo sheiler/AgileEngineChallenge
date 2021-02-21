@@ -1,31 +1,39 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TestTask.ImageCache.Infrastructure.Contracts;
 using TestTask.ImageCache.Infrastructure.Domain;
 
+
 namespace TestTask.ImageCache.Infrastructure.Services
 {
-    public class MemoryCacheImage : ICacheImage<ImageDetails>
+    public class MemoryCacheImage : ICacheImage
     {
-        public void Add(string key, ImageDetails obj)
+        private readonly IMemoryCache _cache;
+
+        public MemoryCacheImage(IMemoryCache cache)
         {
-            throw new NotImplementedException();
+            _cache = cache;
         }
 
-        public List<ImageDetails> GetAll()
+
+        public ListImagesModel Get(string cacheKey)
         {
-            throw new NotImplementedException();
+            var item = (ListImagesModel)_cache.Get(cacheKey);
+
+            return item;
         }
 
-        public ImageDetails GetByKey(string id)
+        public void Set(string cacheKey, ListImagesModel element)
         {
-            throw new NotImplementedException();
-        }
+            var item = (ListImagesModel)_cache.Get(cacheKey);
 
-        public List<ImageDetails> GetByMeta(string key)
-        {
-            throw new NotImplementedException();
+            if (item == null)
+            {
+                _cache.Set(cacheKey, element);
+            }
         }
     }
 }

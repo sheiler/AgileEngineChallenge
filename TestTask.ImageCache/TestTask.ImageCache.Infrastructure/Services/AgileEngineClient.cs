@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -19,65 +20,69 @@ namespace TestTask.ImageCache.Infrastructure.Services
         public AgileEngineClient(HttpClient httpClient) 
         {
             _client = httpClient;
-            _client.BaseAddress = new Uri("https://developer.setmore.com"); // ToDo endpoint list in a const
+            _client.BaseAddress = new Uri("http://interview.agileengine.com"); // ToDo endpoint list in a const
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task<ImageModelResponse> GetAll(int page = 1)
         {
-            var data = await GetData("/Images?page=" + page.ToString());
+            var data = await GetDataWithToken(_client.BaseAddress + "Images?page=" + page.ToString()); // ToDo bulild uris propertly
 
-            var response = JsonSerializer.Deserialize<ImageModelResponse>(data);
+            var response = JsonSerializer.Deserialize<ImageModelResponse>(data.Content.ReadAsStringAsync().Result);
 
             return response;
         }
 
         public async Task<ImageDetails> GetDetails(string id)
         {
-            var data = await GetData("/Images/" + id);
+            var data = await GetDataWithToken(_client.BaseAddress+"Images/" + id); // ToDo bulild uris propertly
 
-            var response = JsonSerializer.Deserialize<ImageDetails>(data);
+            var response = JsonSerializer.Deserialize<ImageDetails>(data.Content.ReadAsStringAsync().Result);
 
             return response;
         }
 
+        #region "Primtive http"
         private async Task<HttpResponseMessage> PostData(string endpoint, string content)
         {
-            var buffer = System.Text.Encoding.UTF8.GetBytes(_client.BaseAddress + endpoint);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var con = await _client.PostAsync(endpoint, new StringContent(content, Encoding.UTF8, "application/json"));
 
-            return await _client.PostAsync(endpoint, byteContent);
+            return con;
         }
-
-        private async Task<string> GetData(string endpoint, int retry = 0)
+        private async Task<HttpResponseMessage> GetDataWithToken(string endpoint)
         {
-            try
-            {
-                return await _client.GetStringAsync(endpoint);
-            }
-            catch (HttpRequestException hex)
-            {
-                if(hex.HResult == 401 && retry == 0)
-                {
-                    await RefreshToken();
-                    retry++;
-                    return await this.GetData(endpoint, retry);
-                }
+            var rs = await _client.GetAsync(endpoint);
 
-                throw hex;
+            if(rs.StatusCode == HttpStatusCode.OK)
+            {
+                return rs;
             }
-            
+            else if(rs.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                await RefreshToken();
+                return await _client.GetAsync(endpoint);
+            }
+            else
+            {
+                throw new Exception("Error getting information from the remote server.");
+            }
+           
         }
+        #endregion
+
+        #region "Token handling"
         private async Task<AuthResponse> GetToken()
         {
             var rq = new AuthRequest(this.secret);
 
-            var rs = await PostData("/auth", JsonSerializer.Serialize(rq));
+            var rs = await PostData(_client.BaseAddress + "auth", JsonSerializer.Serialize(rq));
 
-            if (rs.IsSuccessStatusCode)
+            if (rs.StatusCode == HttpStatusCode.OK)
                 return JsonSerializer.Deserialize<AuthResponse>(rs.Content.ReadAsStringAsync().Result);
-            else
-                throw new Exception("Wrong status code"); // ToDo CustomException
+            else if (rs.StatusCode == HttpStatusCode.Unauthorized)
+                throw new Exception("Could not negotiate token. Possible cause: wrong apikey."); // ToDo CustomException
+            else 
+                throw new Exception("Error during connection"); // ToDo CustomException
         }
         private async Task RefreshToken()
         {
@@ -88,5 +93,6 @@ namespace TestTask.ImageCache.Infrastructure.Services
 
             _client.DefaultRequestHeaders.Add("Authorization", token.token);
         }
+        #endregion
     }
 }

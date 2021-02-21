@@ -11,5 +11,10 @@ namespace TestTask.ImageCache.Infrastructure.Domain
         public string tags { get; set; }
         public string full_picture { get; set; }
 
+        public override string ToString()
+        {
+            return string.Format("{0}{1}{2}",this.author.ToLower(), this.camera.ToLower(), this.tags.ToLower()); 
+        }
+
     }
 }

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TestTask.ImageCache.Infrastructure.Domain;
 
 namespace TestTask.ImageCache.Infrastructure.Contracts
 {
-    public interface ICacheImage<T>
+    public interface ICacheImage // ToDo generic (T Class)
     {
-        public void Add(string key, T obj);
-        public List<T> GetAll();
-        public List<T> GetByMeta(string key);
-        public T GetByKey(string id);
+        public void Set(string key, ListImagesModel obj);
+
+        public ListImagesModel Get(string key);
+       
     }
 }

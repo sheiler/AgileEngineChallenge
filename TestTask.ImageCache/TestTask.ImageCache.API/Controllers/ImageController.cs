@@ -10,7 +10,7 @@ using TestTask.ImageCache.Infrastructure.Domain;
 
 namespace TestTask.ImageCache.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class ImageController : ControllerBase
     {
@@ -21,36 +21,36 @@ namespace TestTask.ImageCache.API.Controllers
             _service = service;
         }
 
-        [HttpGet("{page}", Name = "Get")]
+        [HttpGet("/images/{page}", Name = "Get")]
         public ResponseModel<List<ImageDetails>> Get(int page = 1)
         {
             try
             {
-                return new ResponseModel<List<ImageDetails>>(true, "", this._service.GetByPage(page));
+                return new ResponseModel<List<ImageDetails>>(true, "", this._service.GetByPage(page).Result);
             }
             catch (Exception ex)
             {
                 return new ResponseModel<List<ImageDetails>>(false, ex.Message, null);
             }
         }
-        [HttpGet("{meta}", Name = "GetByMeta")]
+        [HttpGet("/images/search/{meta}", Name = "GetByMeta")]
         public ResponseModel<List<ImageDetails>> GetByMeta(string meta)
         {
             try
             {
-                return new ResponseModel<List<ImageDetails>>(true, "", this._service.GetByMeta(meta));
+                return new ResponseModel<List<ImageDetails>>(true, "", this._service.GetByMeta(meta).Result);
             }
             catch (Exception ex)
             {
                 return new ResponseModel<List<ImageDetails>>(false, ex.Message, null);
             }
         }
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("/images/details/{id}", Name = "GetById")]
         public ResponseModel<ImageDetails> GetById(string id)
         {
             try
             {
-                return new ResponseModel<ImageDetails>(true, "", this._service.GetById(id));
+                return new ResponseModel<ImageDetails>(true, "", this._service.GetById(id).Result);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestTask.ImageCache.Infrastructure.Contracts;
+using TestTask.ImageCache.Infrastructure.Domain;
 using TestTask.ImageCache.Infrastructure.Services;
 
 namespace TestTask.ImageCache.API.Extensions
