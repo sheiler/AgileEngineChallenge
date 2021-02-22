@@ -5,7 +5,7 @@ https://agileenginechallenge.azurewebsites.net/swagger/index.html
 
 # Log
 
-- AOO(50 min)
+AOO(50 min)
  - Thursday
  - 21.00 Read for the first time
  - 21.20 Analizing points of challenge
@@ -14,13 +14,13 @@ https://agileenginechallenge.azurewebsites.net/swagger/index.html
  - 21.45 Get objects detalis (from tested enpoints)
  - 22.00 end
 
-- DOO (50 min)
+DOO (50 min)
  - Sunday
  - 14.00 Analizing class model
  - 14.40 Setup repo and solution
  - 14.50 coffee break
 
-- POO (130 min)
+POO (130 min)
  - Sunday
  - 15.00 Start coding
  - 16.00 1st commit
