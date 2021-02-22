@@ -20,7 +20,7 @@ DOO (50 min)
  - 14.40 Setup repo and solution
  - 14.50 coffee break
 
-POO (130 min)
+POO (140 min without considering the request-token error investigation)
  - Sunday
  - 15.00 Start coding
  - 16.00 1st commit
