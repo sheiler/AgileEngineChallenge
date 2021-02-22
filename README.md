@@ -1,34 +1,34 @@
-# AgileEngineChallenge
+# Agile Engine Challenge "Image gallery search"
 
 # TestApp
 https://agileenginechallenge.azurewebsites.net/swagger/index.html
 
 # Log
 
-AOO(50 min)
-Thursday
-21.00 Read for the first time
-21.20 Analizing points of challenge
-21.25 Testing endpoints
-21.30 Enumerating endpoints to work with
-21.45 Get objects detalis (from tested enpoints)
-22.00
+- AOO(50 min)
+ - Thursday
+ - 21.00 Read for the first time
+ - 21.20 Analizing points of challenge
+ - 21.25 Testing endpoints
+ - 21.30 Enumerating endpoints to work with
+ - 21.45 Get objects detalis (from tested enpoints)
+ - 22.00 end
 
-DOO (50 min)
-Sunday
-14.00 Analizing class model
-14.40 Setup repo and solution
-14.50 coffee break
+- DOO (50 min)
+ - Sunday
+ - 14.00 Analizing class model
+ - 14.40 Setup repo and solution
+ - 14.50 coffee break
 
-POO (130 min)
-Sunday
-15.00 Start coding
-16.00 1st commit
-16.15 pause for token error
-16.45 solve the token error, sunday break
-19.10 Resuming.
-20.05 Finish first draft, test final endpoints (first dragt 2:10hs commit)
-20.15 Finish fully functional (fix search error commit)
+- POO (130 min)
+ - Sunday
+ - 15.00 Start coding
+ - 16.00 1st commit
+ - 16.15 pause for token error
+ - 16.45 solve the token error, sunday break
+ - 19.10 Resuming.
+ - 20.05 Finish first draft, test final endpoints (first dragt 2:10hs commit)
+ - 20.15 Finish fully functional (fix search error commit)
 
 # ToDo List (without time limit)
 - Real search algorithm
@@ -121,10 +121,10 @@ New class model
 
 - ICacheImage
 - MemoryCacheImage : MemoryCache
- -> Add<key, object> : ImageDetails
- -> GetAll : List<ImageDetails>
- -> GetByKey : ImageDetails
- -> GetByMeta : ImageDetails
+ - Add<key, object> : ImageDetails
+ - GetAll : List<ImageDetails>
+ - GetByKey : ImageDetails
+ - GetByMeta : ImageDetails
 
  
 - IImageService
@@ -155,7 +155,7 @@ New class model
 
 *****************************************************************
 
-Solution setup
+#Solution setup
 
 - net core 5, api rest
 - 2 layers, Application, Infrastructure
