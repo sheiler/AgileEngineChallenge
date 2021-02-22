@@ -5,10 +5,10 @@ https://agileenginechallenge.azurewebsites.net/swagger/index.html
 
 # Log
 
-AOO(50 min)
+AOO (50 min)
  - Thursday
  - 21.00 Read for the first time
- - 21.20 Analizing points of challenge
+ - 21.20 Analyzing points of challenge
  - 21.25 Testing endpoints
  - 21.30 Enumerating endpoints to work with
  - 21.45 Get objects detalis (from tested enpoints)
@@ -49,25 +49,30 @@ POO (130 min)
 **********************************************************************************
 Endpoints to consume
 Base URL: http://interview.agileengine.com
+
 POST
+
 /auth
 Body: { "apiKey": "value" }
 Response: { "token": "value" }
 
 
 GET (auth)
+
 /images => ImageModelResponse
 /images?page=N => ImageModelResponse
 /images/id => ImageDetailsExtended
 
 
 Endpoints to expose
+
 /images
 /images/id
 /search/termino => List<ImageDetailsExtended>
 
 
 Objects to develop
+
 - ImageModelResponse
 - ImageDetails
 - ImageBase
@@ -76,6 +81,7 @@ Objects to develop
 
 
 RS examples
+
 ImageDetailsExtended
 {
     "id": "82245459e53513c81f94",
